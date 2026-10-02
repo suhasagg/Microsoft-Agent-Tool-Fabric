@@ -1,0 +1,11 @@
+services:
+  fabric:
+    build: .
+    env_file: .env
+    ports: ["8100:8100"]
+    depends_on: [redis]
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server","--appendonly","yes"]
+    volumes: ["redisdata:/data"]
+volumes: {redisdata: {}}

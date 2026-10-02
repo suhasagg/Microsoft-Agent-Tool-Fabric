@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: agent-tool-fabric}
+spec:
+  replicas: 3
+  selector: {matchLabels: {app: agent-tool-fabric}}
+  template:
+    metadata: {labels: {app: agent-tool-fabric}}
+    spec:
+      securityContext: {runAsNonRoot: true}
+      containers:
+      - name: fabric
+        image: agent-tool-fabric:1.0.0
+        ports: [{containerPort: 8100}]
+        readinessProbe: {httpGet: {path: /health/live,port: 8100}}
+        resources:
+          requests: {cpu: "250m",memory: "256Mi"}
+          limits: {cpu: "2",memory: "1Gi"}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: agent-tool-fabric}
+spec:
+  selector: {app: agent-tool-fabric}
+  ports: [{port: 80,targetPort: 8100}]

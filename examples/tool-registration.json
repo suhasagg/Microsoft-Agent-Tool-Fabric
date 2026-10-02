@@ -1,0 +1,1 @@
+{"name":"azure.logs.query","description":"Query Azure Monitor logs","protocol":"rest","endpoint":"https://example.invalid","risk":"read","tags":["azure","logs","sre"]}
